@@ -4,3 +4,5 @@
 /frames/*
 !/frames/.gitkeep
 set_env.sh
+set_env.bat
+/setup/*/venv

@@ -1,45 +1,24 @@
-# David Attenborough narrates your life. 
+# NewName
 
-https://twitter.com/charliebholtz/status/1724815159590293764
+This is a fork of [Charlie Holtz's](https://github.com/cbh123/narrator/tree/main) repository [narrator](https://github.com/cbh123/narrator/tree/main) with substantial changes.
 
-## Want to make your own AI app?
-Check out [Replicate](https://replicate.com). We make it easy to run machine learning models with an API.
+## Introduction
+
+Experiments with a Raspberry PI, Camera, Microphone and AI.
 
 ## Setup
 
-Clone this repo, and setup and activate a virtualenv:
+Clone this repository and set up a virtual environment:
 
+First, set up the environment.
+For Windows:
+```bat
+cd setup/windows
+setup.bat
+```
+
+For Raspberry Pi
 ```bash
-python3 -m pip install virtualenv
-python3 -m virtualenv venv
-source venv/bin/activate
+cd setup/raspbian
+./setup.sh
 ```
-
-Then, install the dependencies:
-`pip install -r requirements.txt`
-
-Make a [Replicate](https://replicate.com), [OpenAI](https://beta.openai.com/), and [ElevenLabs](https://elevenlabs.io) account and set your tokens:
-
-```
-export OPENAI_API_KEY=<token>
-export ELEVENLABS_API_KEY=<eleven-token>
-```
-
-Make a new voice in Eleven and get the voice id of that voice using their [get voices](https://elevenlabs.io/docs/api-reference/voices) API, or by clicking the flask icon next to the voice in the VoiceLab tab.
-
-```
-export ELEVENLABS_VOICE_ID=<voice-id>
-```
-
-## Run it!
-
-In on terminal, run the webcam capture:
-```bash
-python capture.py
-```
-In another terminal, run the narrator:
-
-```bash
-python narrator.py
-```
-
