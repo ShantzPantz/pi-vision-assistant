@@ -22,3 +22,11 @@ For Raspberry Pi
 cd setup/raspbian
 ./setup.sh
 ```
+
+### Thoughts & TODO
+- Support different modes. Modes will determine how the application responds. 
+- Add an SQLite DB do handle app configurations and persistent state.
+- Modes:
+    - Check if a human is in the frame, if they are, process the image, otherwise, do nothing. 
+    - Add multiple personalites, keep a dictionary of available voices and assign them "personalities" via chatgpt commands. 
+- Support voice commands, allow the user to interact with the pi, and have the pi respond with voice AI. I was hoping to utilize Google Assistant services for this. 
