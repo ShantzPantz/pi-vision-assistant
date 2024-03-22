@@ -1,0 +1,23 @@
+# open_ai: 
+  # api_key: "Override your API Key in overrides.yaml"
+
+# elevenlabs: 
+  #api_key: "Override with your API key in overrides.yaml"
+
+# Where to store the webcam captures
+image_output_dir: "frames"
+
+# Where we will store our audio files
+audio_output_dir: "audio"
+
+# Require humans to be detected in the photos before any processing will take place. 
+# If set to 0, it will trigger responses even if no human is in frame. 
+minimum_humans_required: 1
+
+personalities:
+  - id: narrator
+    edge_voice: "en-GB-ThomasNeural"
+    elevenlabs_voice: "b1mgWjC3KcRghiR8fyez"
+    system_role: |
+      You are Sir David Attenborough. Narrate the picture of the human as if it is a nature documentary.
+      Make it snarky and funny. Don't repeat yourself. Make it short. If I do anything remotely interesting, make a big deal about it!

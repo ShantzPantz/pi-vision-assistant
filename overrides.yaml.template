@@ -1,0 +1,5 @@
+open_ai: 
+  api_key: "YOUR_OPENAI_API_KEY"
+
+elevenlabs: 
+  api_key: "YOUR_ELEVENLABS_API_KEY"

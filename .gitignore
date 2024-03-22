@@ -6,3 +6,5 @@
 set_env.sh
 set_env.bat
 /setup/*/venv
+overrides.yaml
+*.pyc
