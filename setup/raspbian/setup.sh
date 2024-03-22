@@ -1,8 +1,8 @@
 #!/bin/bash
 
-# Create python environment
-python3 -m venv venv
-source venv/bin/activate
+# install mpg123
+sudo apt-get update 
+sudo apt-get install mpg123
 
 # Install the dependencies:
 pip install -r requirements.txt

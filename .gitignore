@@ -1,6 +1,7 @@
 .env
 /venv
 /narration
+/narration2
 /frames/*
 !/frames/.gitkeep
 set_env.sh

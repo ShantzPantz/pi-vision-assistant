@@ -1,18 +1,23 @@
+import os
+from settings import ConfigSingleton
+# Load our configuration
+config = ConfigSingleton("defaults.yaml", "overrides.yaml")
+# Set these environment variables that get used by the respective clients.
+os.environ['OPENAI_API_KEY'] = config.get_open_ai_key()
+os.environ['ELEVENLABS_API_KEY'] = config.get_open_ai_key()
+
 import cv2
 import time
 from PIL import Image
 import numpy as np
-import os
-from settings import ConfigSingleton
 
-# Load our configuration
-config = ConfigSingleton("defaults.yaml", "overrides.yaml")
-
+import interactions.narrator_edge_tts as narrator
 
 # Folder
 frames_folder = config.get_image_dir()
 audio_folder = config.get_audio_dir()
 min_humans = config.get_minimum_humans_required()
+
 
 # Create the frames folder if it doesn't exist
 frames_dir = os.path.join(os.getcwd(), frames_folder)
@@ -50,38 +55,53 @@ def resize_image(frame: Image, max_size=250) -> Image:
     
     return frame
 
+def process_frames():
+    script = []
+    while True:
+        print("Running while loop.")
+        ret, frame = cap.read()
 
-while True:
-    ret, frame = cap.read()
+        if ret:                
+            path = f"{frames_dir}/frame.jpg"
 
-    if ret:                
-        path = f"{frames_dir}/frame.jpg"
-
-        # If humans are required, check if there are enough
-        if min_humans > 0:
-            # Convert to grayscale
-            frame_gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-            (humans, _) = hog.detectMultiScale(frame_gray)
-            
-            # Print locations of humans
-            print(humans)
-            
-            if len(humans) >= min_humans:                
-                print(f"📸 {len(humans)} people found! Saving frame.")
-                # Save the frame as an image file
-                cv2.imwrite(path, resize_image(frame))                
+            # If humans are required, check if there are enough
+            if min_humans > 0:
+                # Convert to grayscale
+                frame_gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+                (humans, _) = hog.detectMultiScale(frame_gray)
+                
+                # Print locations of humans
+                print(humans)
+                
+                if len(humans) >= min_humans:                
+                    print(f"📸 {len(humans)} people found! Saving frame.")                                
+                    # Save the frame as an image file
+                    cv2.imwrite(path, resize_image(frame))                
+                   
+                    script = narrator.interact_with_image(image_path=path, script=script)                   
+                else:
+                    print("Nobody found in frame... Ignoring photo.")
             else:
-                print("Nobody found in frame... Ignoring photo.")
+                print(f"📸 Saving Frame.")
+                cv2.imwrite(path, resize_image(frame))
+
         else:
-            print(f"📸 Saving Frame.")
-            cv2.imwrite(path, resize_image(frame))
+            print("Failed to capture image")
 
-    else:
-        print("Failed to capture image")
+        # Wait for 2 seconds
+        time.sleep(2)
 
-    # Wait for 2 seconds
-    time.sleep(2)
 
-# Release the camera and close all windows
-cap.release()
-cv2.destroyAllWindows()
+def main():   
+    process_frames()
+    print("Finished processing frames")
+    
+    # Release the camera and close all windows
+    cap.release()
+    cv2.destroyAllWindows()
+
+if __name__ == "__main__":    
+    main()
+
+
+

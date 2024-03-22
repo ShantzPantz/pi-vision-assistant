@@ -35,7 +35,7 @@ class ConfigSingleton:
         return self._config.get(property_name, None)
     
     def get_open_ai_key(self):
-        return self.get_property("api_key").get("api_key")
+        return self.get_property("open_ai").get("api_key")
     
     def get_elevenlabs_key(self):
         return self.get_property("elevenlabs").get("api_key")
