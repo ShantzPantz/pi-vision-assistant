@@ -23,6 +23,9 @@ cd setup/raspbian
 ./setup.sh
 ```
 
+## Voice Recognition
+- [Google Assistant Service](https://developers.google.com/assistant/sdk/guides/service/python)
+
 ### Thoughts & TODO
 - Support different modes. Modes will determine how the application responds. 
 - Add an SQLite DB do handle app configurations and persistent state.

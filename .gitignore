@@ -9,3 +9,4 @@ set_env.bat
 /setup/*/venv
 overrides.yaml
 *.pyc
+/reference
