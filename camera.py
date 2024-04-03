@@ -37,4 +37,4 @@ class CameraSightProcessor:
         # Getting the base64 encoding
         base64_image = encode_image("test.png")
 
-        base64_image
+        return base64_image
