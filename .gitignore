@@ -10,3 +10,5 @@ set_env.bat
 overrides.yaml
 *.pyc
 /reference
+*.png
+*.jpg
