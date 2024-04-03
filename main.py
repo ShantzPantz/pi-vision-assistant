@@ -1,5 +1,7 @@
 import os
 from audio import AudioCommandProcessor
+from camera import CameraSightProcessor
+import openai_helpers
 
 def main():    
     # Access environment variables
@@ -28,16 +30,31 @@ def main():
         silence_threshold=silence_threshold
     )
 
+    cameraSightProcessor = CameraSightProcessor()
+
     # Start the recording and text processing
     audioCommandProcessor.start()
+    # Setup Camera processor
+    cameraSightProcessor.start()
 
     while True:
         command = audioCommandProcessor.tryGetCommand()
-
-        if command != None:
-            print(command)
-
+        if command == None:
+            return
         
+        if openai_helpers.does_command_require_camera(command):
+            image_output = cameraSightProcessor.capture_image_as_base64()
+            
+            response = openai_helpers.analyze_image('snoop', base64_image=image_output, command=command)
+            #todo narrate here. 
+            print(response)
+        else:
+            response = openai_helpers.generate_response('snoop', [{
+                "role": "user",
+                "content": command
+            }])
+            print(response)        
+         
     
 
 if __name__ == '__main__':

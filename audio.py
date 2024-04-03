@@ -123,21 +123,24 @@ class AudioCommandProcessor:
 
             if voice_probability < self.voice_probability_threshold:
                 if self.silence_start_time is None:
-                    self.silence_start_time = datetime.now() 
-
-            elif (datetime.now() - self.silence_start_time).total_seconds() >= self.silence_threshold:
-                # If silence exceeds threshold, stop recording
-                print("Silence threshold exceeded. Stopping recording.")      
-                self.is_recording = False
+                    self.silence_start_time = datetime.now()
+                 
+                elif (datetime.now() - self.silence_start_time).total_seconds() >= self.silence_threshold:
+                    # If silence exceeds threshold, stop recording
+                    print("Silence threshold exceeded. Stopping recording.")                      
+                    if self.wav_file is not None:
+                        self.wav_file.close()
+                        
+                        last_file_path = self.current_filepath
+                        self.wav_file = None
+                        self.is_recording = False
+                        self.silence_start_time = None
+                        self.current_filename = None
+                        
+                        return openai_helpers.text_from_audio(file_path=last_file_path)
+            else:                
                 self.silence_start_time = None
-                if self.wav_file is not None:
-                    self.wav_file.close()
-                    self.wav_file = None
-                    last_file_path = self.current_filepath
-                    self.current_filename = None
-                    
-                    return openai_helpers.text_from_audio(file_path=last_file_path)
-                
+
         return None
 
     # def waitForCommand(self):
